@@ -6,7 +6,15 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Lab 9</title>
-
+  
+  <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
+  <script>
+    window.TrackJS && TrackJS.install({ 
+      token: "cdcec29f016d4403ab4d1e383dcced51"
+    // for more configuration options, see https://docs.trackjs.com
+    });
+  </script>
+                        
   <style>
     button {
       margin: 3px;
@@ -70,6 +78,7 @@
 
     <section id="error-btns">
       <button>Console Log</button>
+
       <button>Console Error</button>
       <button>Console Count</button>
       <button>Console Warn</button>
@@ -102,6 +111,97 @@
 
     // Start your code here
     // You may move this JS to another file if you wish
+
+    errorBtns[0].addEventListener('click', e => {
+      console.log("Button Pressed - Console log");
+    });
+    errorBtns[1].addEventListener('click', e => {
+      console.error("Console Error");
+    });
+    let clicks = 0;
+    errorBtns[2].addEventListener('click', e => {
+      console.log(`${++clicks}`);
+    });
+    errorBtns[3].addEventListener('click', e => {
+      console.warn("console warn");
+    });
+    errorBtns[4].addEventListener('click',e => {
+      let x = 3;
+      let y= 3;
+      console.assert(x==y);
+    });
+    errorBtns[5].addEventListener('click',e => {
+      console.clear();
+      clicks = 0;
+    });
+    errorBtns[6].addEventListener('click', e => {
+      console.dir(document.styleSheets);
+    })
+    errorBtns[7].addEventListener('click', e => {
+      console.dirxml(document.scripts);
+    });
+    errorBtns[8].addEventListener('click', e => {
+      console.group("console group");
+    });
+    errorBtns[9].addEventListener('click', e => {
+      console.groupEnd();
+    });
+
+    let consoletables = [{Team_1 : "FC barcelona"},
+    {Team_2 : "Arsenal FC"}, {Team_3 : "Manchester"}, {Team_4 : "Cataluna"}];
+    errorBtns[10].addEventListener('click', e => {
+      console.table(consoletables);
+    });
+    errorBtns[11].addEventListener('click', e =>{
+      console.time();
+    });
+    errorBtns[12].addEventListener('click',e => {
+      console.timeEnd();
+    });
+    errorBtns[13].addEventListener('click', e => {
+      const traces = () => {console.trace()};
+    });
+    errorBtns[14].addEventListener('click',e => {
+      let global_Error = 123;
+      console.log(global_Error);
+    });
+
+    let teams =  '{"Team_1":"FC barcelona"}';
+    try{
+      let team = JSON.parse(teams);
+      if (!team.player){
+        console.log("Not the right player");
+      }
+
+    }catch(error){
+      if (error instanceof ValidationError){
+        throw error;
+      }
+    }finally{
+      console.log("Error catched");
+    };
+    class ValidationError extends Error{
+      constructor(message){
+        super(message);
+        this.name = "ValidationError";
+      }
+    }
+    function emailvalid(email){
+      if (!email.includes("3")){
+        throw new ValidationError("Email not valid");
+      }
+    }
+    try {
+      emailvalid("werwer@google.com");
+    }catch(error){
+      if (error instanceof ValidationError){
+        console.log("Validation error");
+      }
+      else{
+        console.log("no");
+      }
+    }
+
   </script>
 </body>
 
